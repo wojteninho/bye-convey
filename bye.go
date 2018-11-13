@@ -88,8 +88,8 @@ func replaceAssertionsFn(in []byte) []byte {
 	// [ ] ShouldBeZeroValue    = assertions.ShouldBeZeroValue
 
 	// ShouldEqual --> To(Equal(...))
-	in = bytes.Replace(in, []byte(", ShouldEqual, "), []byte(").To(Equal("), 1)
-	in = bytes.Replace(in, []byte(", ShouldNotEqual, "), []byte(").ToNot(Equal("), 1)
+	in = bytes.Replace(in, []byte(", ShouldEqual, "), []byte(").To(BeEquivalentTo("), 1)
+	in = bytes.Replace(in, []byte(", ShouldNotEqual, "), []byte(").ToNot(BeEquivalentTo("), 1)
 
 	// ShouldResemble -->
 	in = bytes.Replace(in, []byte(", ShouldResemble, "), []byte(").To(Equal("), 1)
@@ -209,6 +209,7 @@ func replaceAssertionsFn(in []byte) []byte {
 
 	// append one more )
 	if  bytes.Contains(in, []byte("Equal(")) ||
+                bytes.Contains(in, []byte("BeEquivalentTo(")) ||
 		bytes.Contains(in, []byte("BeAssignableToTypeOf(")) ||
 		bytes.Contains(in, []byte("Implements(")) ||
 		bytes.Contains(in, []byte("HaveLen(")) ||
